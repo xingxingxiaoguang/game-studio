@@ -36,7 +36,7 @@ If no engine is specified, run an interactive engine selection process:
 
 **Question 1 — Prior experience** (ask this first, always, via `AskUserQuestion`):
 - Prompt: "Have you worked in any of these engines before?"
-- Options: `Godot` / `Unity` / `Unreal Engine 5` / `Multiple — I'll explain` / `None of them`
+- Options: `Godot` / `Unity` / `Unreal Engine 5` / `Cocos Creator` / `Multiple — I'll explain` / `None of them`
 - If they pick a specific engine → recommend that engine. Prior experience outweighs all other factors. Confirm with them and skip the matrix.
 - If "None" or "Multiple" → continue to the questions below.
 
@@ -46,11 +46,11 @@ If no engine is specified, run an interactive engine selection process:
 - Prompt: "What platforms are you targeting for this game?"
 - Options: `PC (Steam / Epic)` / `Mobile (iOS / Android)` / `Console` / `Web / Browser` / `Multiple platforms`
 - Platform rules that feed directly into the recommendation:
-  - Mobile → Unity strongly preferred; Unreal is a poor fit; Godot is viable for simple mobile
-  - Console → Unity or Unreal; Godot console support requires third-party publishers or significant extra work
-  - Web → Godot exports cleanly to web; Unity WebGL is functional; Unreal has poor web support
+  - Mobile → Unity or Cocos Creator strongly preferred; Unreal is a poor fit; Godot is viable for simple mobile
+  - Console → Unity or Unreal; Godot console support requires third-party publishers or significant extra work; Cocos Creator has limited console support
+  - Web → Godot exports cleanly to web; Cocos Creator exports well to web (native web support); Unity WebGL is functional; Unreal has poor web support
   - PC only → all engines viable; other factors decide
-  - Multiple → Unity is the most portable across PC/mobile/console
+  - Multiple → Unity is the most portable across PC/mobile/console; Cocos Creator is strong for mobile+web
 
 1. **What kind of game?** (2D, 3D, or both?)
 2. **Primary input method?** (keyboard/mouse, gamepad, touch, or mixed?)
@@ -82,12 +82,18 @@ Do NOT use a simple scoring matrix that eliminates engines. Instead, reason thro
 - Licensing reality: 5% royalty only applies AFTER $1M gross revenue per title. For a first game or any game that doesn't reach $1M, it costs nothing. This threshold is high enough that most indie developers will never pay it.
 - Best fit: AAA-quality 3D; large open-world games; photorealistic visuals; developers with C++ experience or willing to use Blueprint; games targeting high-end PC/console where visual fidelity is a core selling point
 
+**Cocos Creator**
+- Genuine strengths: Purpose-built for 2D mobile games; excellent mobile deployment (iOS/Android native); strong in the Chinese/Asian mobile market; TypeScript is modern and accessible; lightweight editor with fast iteration; good 2D skeletal animation support (Spine, DragonBones); built-in UI system designed for mobile; strong mini-game platform support (WeChat, etc.)
+- Real limitations: Smaller Western community compared to Unity/Godot; fewer third-party tutorials and assets in English; 3D capabilities exist but are not the engine's strength; limited console support; documentation quality varies; smaller job market outside Asia
+- Licensing reality: Free and open source (MIT license for engine). No revenue thresholds. Cocos Creator is fully free for commercial use.
+- Best fit: 2D mobile games; casual/mid-core mobile titles; games targeting Asian markets; developers with TypeScript/JavaScript background; projects where lightweight mobile deployment is critical
+
 **Genre-specific guidance** (factor this into the recommendation):
 - 2D any style → Godot strongly preferred
 - 3D stylized / atmospheric / contained world → Godot viable, Unity solid alternative
 - 3D open world (large, seamless) → Unity or Unreal; Godot is not production-proven for this
 - 3D photorealistic / AAA-quality → Unreal
-- Mobile-first → Unity strongly preferred
+- Mobile-first → Unity or Cocos Creator strongly preferred
 - Console-first → Unity or Unreal; Godot console support requires extra work
 - Horror / narrative / walking sim → any engine; match to art style and team experience
 - Action RPG / Soulslike → Unity or Unreal for 3D; community support and assets matter here
@@ -167,6 +173,14 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 - **Asset Pipeline**: Unreal Content Pipeline
 ```
 
+**For Cocos Creator:**
+```markdown
+- **Engine**: Cocos Creator [version]
+- **Language**: TypeScript
+- **Build System**: Cocos Creator Build Pipeline
+- **Asset Pipeline**: Cocos Asset Pipeline (Auto Atlas, texture compression)
+```
+
 ---
 
 ## 5. Populate Technical Preferences
@@ -195,6 +209,16 @@ engine-appropriate defaults. Read the existing template first, then fill in:
 - Functions: PascalCase (e.g., `TakeDamage()`)
 - Booleans: `b` prefix (e.g., `bIsAlive`)
 - Files: Match class without prefix (e.g., `PlayerController.h`)
+
+**For Cocos Creator (TypeScript):**
+- Classes: PascalCase (e.g., `HeroController`)
+- Public properties/methods: camelCase (e.g., `moveSpeed`, `takeDamage()`)
+- Private fields: _camelCase (e.g., `_moveSpeed`)
+- Constants: UPPER_SNAKE_CASE (e.g., `MAX_TOWER_LEVEL`)
+- Files: kebab-case (e.g., `hero-controller.ts`)
+- Components: PascalCase matching class (e.g., `HeroController.ts`)
+- Scenes: kebab-case (e.g., `level-01.scene`)
+- Prefabs: kebab-case (e.g., `arrow-tower.prefab`)
 
 ### Input & Platform Section
 
@@ -291,6 +315,28 @@ Also populate the `## Engine Specialists` section in `technical-preferences.md` 
 | General architecture review | unreal-specialist |
 ```
 
+**For Cocos Creator:**
+```markdown
+## Engine Specialists
+- **Primary**: cocos-creator-specialist
+- **Language/Code Specialist**: cocos-typescript-specialist (TypeScript typing, decorators, async patterns)
+- **Shader Specialist**: cocos-shader-specialist (Effect materials, custom shaders, particle effects)
+- **UI Specialist**: cocos-ui-specialist (Canvas, Widget, Layout, ScrollView, mobile touch UI)
+- **Additional Specialists**: None currently configured
+- **Routing Notes**: Invoke primary for architecture and component design decisions. Invoke TypeScript specialist for code quality and typing. Invoke shader specialist for rendering and VFX. Invoke UI specialist for all interface implementation and mobile layout.
+
+### File Extension Routing
+
+| File Extension / Type | Specialist to Spawn |
+|-----------------------|---------------------|
+| Game code (.ts files) | cocos-typescript-specialist |
+| Shader / material files (.effect, .mtl) | cocos-shader-specialist |
+| UI / screen files (.scene with Canvas, .prefab UI) | cocos-ui-specialist |
+| Scene / prefab / level files (.scene, .prefab) | cocos-creator-specialist |
+| Native extension / plugin files (.cpp, .java, .swift) | cocos-creator-specialist |
+| General architecture review | cocos-creator-specialist |
+```
+
 ### Collaborative Step
 Present the filled-in preferences to the user. For Godot, include the chosen language and note where the full naming conventions and routing tables live:
 > "Here are the default technical preferences for [engine] ([language if Godot]). The naming conventions and specialist routing are in Appendix A of this skill — I'll apply the [GDScript/C#/Both] variant. Want to customize any of these, or shall I save the defaults?"
@@ -310,6 +356,7 @@ Check whether the engine version is likely beyond the LLM's training data.
 - Godot: training data likely covers up to ~4.3
 - Unity: training data likely covers up to ~2023.x / early 6000.x
 - Unreal: training data likely covers up to ~5.3 / early 5.4
+- Cocos Creator: training data likely covers up to ~3.7 / early 3.8
 
 Compare the user's chosen version against these baselines:
 

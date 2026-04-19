@@ -60,6 +60,7 @@ domain lead) should delegate to specialists.
 | `unreal-specialist` | Unreal Engine 5 | Sonnet | Blueprint vs C++, GAS overview, UE subsystems, Unreal optimization |
 | `unity-specialist` | Unity | Sonnet | MonoBehaviour vs DOTS, Addressables, URP/HDRP, Unity optimization |
 | `godot-specialist` | Godot 4 | Sonnet | GDScript patterns, node/scene architecture, signals, Godot optimization |
+| `cocos-creator-specialist` | Cocos Creator 3.x | Sonnet | TypeScript patterns, component architecture, scene management, mobile optimization |
 
 ### Unreal Engine Sub-Specialists
 
@@ -86,3 +87,12 @@ domain lead) should delegate to specialists.
 | `godot-gdscript-specialist` | GDScript | Sonnet | Static typing, design patterns, signals, coroutines, GDScript performance |
 | `godot-shader-specialist` | Shaders/Rendering | Sonnet | Godot shading language, visual shaders, particles, post-processing |
 | `godot-gdextension-specialist` | GDExtension | Sonnet | C++/Rust bindings, native performance, custom nodes, build systems |
+| `godot-csharp-specialist` | C# | Sonnet | .NET patterns, attribute-based exports, signal delegates, async patterns |
+
+### Cocos Creator Sub-Specialists
+
+| Agent | Subsystem | Model | When to Use |
+| ---- | ---- | ---- | ---- |
+| `cocos-typescript-specialist` | TypeScript | Sonnet | Type safety, decorators, async patterns, component lifecycle, code quality |
+| `cocos-shader-specialist` | Shaders/Rendering | Sonnet | Effect materials, custom shaders, particle effects, rendering performance |
+| `cocos-ui-specialist` | UI System | Sonnet | Canvas, Widget, Layout, ScrollView, mobile touch UI, responsive layout |
